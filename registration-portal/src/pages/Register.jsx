@@ -3,6 +3,7 @@ import * as Yup from "yup";
 
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { registerUser } from "../services/userService";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -43,10 +44,22 @@ const Register = () => {
             confirmPassword: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(_, { setStatus }) => {
-            setStatus(
-              "Validation successful. This frontend-only demo does not create an account."
-            );
+          onSubmit={async ({ name, email }, { setStatus }) => {
+            try {
+              await registerUser({ name, email });
+              setStatus({
+                type: "success",
+                message: "Registration submitted successfully.",
+              });
+            } catch (error) {
+              setStatus({
+                type: "error",
+                message:
+                  error instanceof Error
+                    ? error.message
+                    : "Registration failed. Please try again.",
+              });
+            }
           }}
         >
           {({
@@ -69,8 +82,13 @@ const Register = () => {
               )}
 
               {status && (
-                <p className="mb-4 text-sm text-green-700" role="status">
-                  {status}
+                <p
+                  className={`mb-4 text-sm ${
+                    status.type === "error" ? "text-red-500" : "text-green-700"
+                  }`}
+                  role={status.type === "error" ? "alert" : "status"}
+                >
+                  {status.message}
                 </p>
               )}
 
