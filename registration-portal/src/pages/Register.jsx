@@ -82,14 +82,42 @@ const Register = () => {
               )}
 
               {status && (
-                <p
-                  className={`mb-4 text-sm ${
-                    status.type === "error" ? "text-red-500" : "text-green-700"
-                  }`}
-                  role={status.type === "error" ? "alert" : "status"}
-                >
-                  {status.message}
-                </p>
+                status.type === "success" ? (
+                  <div
+                    className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900 shadow-sm"
+                    role="status"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                      <svg
+                        aria-hidden="true"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m5 12 4 4L19 6"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <p className="font-semibold">You’re all set!</p>
+                      <p className="mt-1 text-sm text-emerald-800">
+                        {status.message} Welcome, {values.name}!
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <p
+                    className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                    role="alert"
+                  >
+                    {status.message}
+                  </p>
+                )
               )}
 
               <InputField
