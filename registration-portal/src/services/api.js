@@ -1,4 +1,4 @@
-```javascript
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const registerUser = async (data) => {
@@ -33,4 +33,3 @@ export const registerUser = async (data) => {
 
   return result;
 };
-```
