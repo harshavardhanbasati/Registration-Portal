@@ -1,17 +1,9 @@
 # Registration Portal
 
-## Run the backend
+This frontend-only demo validates registration form inputs in the browser. A
+successful validation does not create or save an account.
 
-From the `backend` directory, install the Python dependencies and start FastAPI:
-
-```powershell
-python -m pip install -r requirements.txt
-python -m uvicorn app.main:app --reload
-```
-
-The API listens on `http://localhost:8000`; registration is handled by `POST /api/register`.
-
-## Run the frontend
+## Run the project
 
 From the project root, install the Node dependencies and start Vite:
 
@@ -19,5 +11,3 @@ From the project root, install the Node dependencies and start Vite:
 npm install
 npm run dev
 ```
-
-The frontend defaults to `http://localhost:8000/api`. Set `VITE_API_URL` to override that API base URL; it should include `/api` (for example, `http://localhost:8000/api`).

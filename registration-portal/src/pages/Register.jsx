@@ -3,7 +3,6 @@ import * as Yup from "yup";
 
 import InputField from "../components/InputField";
 import Button from "../components/Button";
-import { registerUser } from "../services/api";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -44,16 +43,10 @@ const Register = () => {
             confirmPassword: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
-            try {
-              await registerUser(values);
-              alert("Registration successful!");
-              resetForm();
-            } catch (error) {
-              alert(error.message);
-            } finally {
-              setSubmitting(false);
-            }
+          onSubmit={(_, { setStatus }) => {
+            setStatus(
+              "Validation successful. This frontend-only demo does not create an account."
+            );
           }}
         >
           {({
@@ -63,15 +56,33 @@ const Register = () => {
             handleChange,
             handleBlur,
             isSubmitting,
+            isValid,
+            setStatus,
+            status,
+            submitCount,
           }) => (
             <Form>
+              {submitCount > 0 && !isValid && (
+                <p className="mb-4 text-sm text-red-500" role="alert">
+                  Please correct the invalid fields before continuing.
+                </p>
+              )}
+
+              {status && (
+                <p className="mb-4 text-sm text-green-700" role="status">
+                  {status}
+                </p>
+              )}
 
               <InputField
                 label="Full Name"
                 name="name"
                 placeholder="Enter your name"
                 value={values.name}
-                onChange={handleChange}
+                onChange={(event) => {
+                  setStatus(undefined);
+                  handleChange(event);
+                }}
                 onBlur={handleBlur}
               />
 
@@ -85,7 +96,10 @@ const Register = () => {
                 type="email"
                 placeholder="Enter your email"
                 value={values.email}
-                onChange={handleChange}
+                onChange={(event) => {
+                  setStatus(undefined);
+                  handleChange(event);
+                }}
                 onBlur={handleBlur}
               />
 
@@ -99,7 +113,10 @@ const Register = () => {
                 type="password"
                 placeholder="Enter password"
                 value={values.password}
-                onChange={handleChange}
+                onChange={(event) => {
+                  setStatus(undefined);
+                  handleChange(event);
+                }}
                 onBlur={handleBlur}
               />
 
@@ -115,7 +132,10 @@ const Register = () => {
                 type="password"
                 placeholder="Confirm password"
                 value={values.confirmPassword}
-                onChange={handleChange}
+                onChange={(event) => {
+                  setStatus(undefined);
+                  handleChange(event);
+                }}
                 onBlur={handleBlur}
               />
 
