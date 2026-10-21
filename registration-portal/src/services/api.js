@@ -3,9 +3,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const registerUser = async (data) => {
   if (!API_URL) {
-    throw new Error(
-      "VITE_API_URL is missing. Check your Vercel environment variables and redeploy."
-    );
+    throw new Error("VITE_API_URL is not configured.");
   }
 
   const response = await fetch(`${API_URL}/register`, {
@@ -23,7 +21,7 @@ export const registerUser = async (data) => {
     result = JSON.parse(text);
   } catch {
     throw new Error(
-      `Server returned non-JSON (HTTP ${response.status}): ${text.slice(0, 200)}`
+      `Invalid server response (HTTP ${response.status}): ${text.slice(0, 200)}`
     );
   }
 
