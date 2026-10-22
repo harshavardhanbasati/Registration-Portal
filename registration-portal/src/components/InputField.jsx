@@ -1,18 +1,26 @@
-const InputField = ({ label, name, type = "text", ...props }) => {
+const InputField = ({ label, name, type = "text", error, ...props }) => {
   return (
-    <div className="mb-4">
-      <label className="block mb-1 font-medium text-gray-700">
+    <div className="flex flex-col gap-[7px]">
+      <label htmlFor={name} className="text-xs font-semibold text-[#333c47]">
         {label}
       </label>
 
       <input
+        id={name}
         name={name}
         type={type}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${name}-error` : undefined}
         {...props}
-        className="w-full rounded-lg border border-gray-300 px-4 py-2
-                   outline-none focus:border-indigo-500 focus:ring-2
-                   focus:ring-indigo-200"
+        className={`h-10 w-full rounded border px-[11px] text-[13px] text-[#252b33] outline-none placeholder:text-[#929ba6] focus:border-[#426b91] focus:ring-2 focus:ring-[#426b91]/15 ${
+          error ? "border-[#b84d4d]" : "border-[#cbd1d9]"
+        }`}
       />
+      {error && (
+        <span className="text-[11px] text-[#a13232]" id={`${name}-error`}>
+          {error}
+        </span>
+      )}
     </div>
   );
 };
